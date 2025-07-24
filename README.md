@@ -39,7 +39,7 @@ The following table summarizes the statistical properties of the primary indicat
 
 ### 2. Distribution Visualizations
 
-![Feature Distributions: Volume Imbalance, Log Return, Correlation with SPY](High-Mid_Frequency_Strategy/feature_distributions_your_data.png)
+![Feature Distributions: Volume Imbalance, Log Return, Correlation with SPY](/feature_distributions_your_data.png)
 
 **Visual Confirmation:**
 
@@ -66,7 +66,7 @@ To understand the temporal behavior of our indicators, we performed the Augmente
 
 **ACF Plots for AAPL:**
 
-![Autocorrelation Plots for AAPL: Volume Imbalance & Log Return](High-Mid_Frequency_Strategy/autocorrelation_plots_your_data.png)
+![Autocorrelation Plots for AAPL: Volume Imbalance & Log Return](/autocorrelation_plots_your_data.png)
 
 * **`volume_imbalance` ACF Plot:**
     * **Expected Behavior:** The ACF plot for `volume_imbalance` typically shows autocorrelation coefficients (blue bars) that **decay quickly** into or near the confidence interval (blue shaded area).
