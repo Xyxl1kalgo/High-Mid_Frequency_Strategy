@@ -121,3 +121,52 @@ We utilize a robust backtesting framework (e.g., [Backtrader](https://www.backtr
         * The strategy employs an aggressive **`exit_on_reverse_signal = True`** parameter. This means if an existing position's entry conditions are no longer met, **OR** if the conditions for an immediate opposite trade are met, the current position will be closed, and a new position in the opposite direction will be opened in the same bar. This allows for rapid capitalization on mean-reverting swings.
 3.  **Execute Trades:** Simulate trade execution with specified commission, slippage (if modeled), and capital management rules.
 4.  **Generate Performance Metrics:** Calculate key metrics such as total return, Sharpe Ratio, drawdown, win rate, etc.
+
+
+
+## Optimization: Monte Carlo Simulation
+
+To identify optimal and robust parameter sets, the strategy utilizes **Monte Carlo optimization**. This approach involves:
+
+* **Extensive Parameter Exploration:** Randomly generating a large number of parameter combinations within predefined ranges. This allows for a broad search across the strategy's parameter space.
+* **Robustness Assessment:** Evaluating strategy performance (Total Return, Sharpe Ratio, Max Drawdown) across various random parameter sets helps to understand the sensitivity of the strategy to parameter changes and identify more resilient configurations.
+* **Top Performance Identification:** Results are then analyzed and sorted, typically by **Total Return** (especially when Sharpe Ratio might be less informative due to specific data characteristics or a short testing period), to highlight the most promising parameter combinations.
+
+## Getting Started
+
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/Xyxl1kalgo/High-Mid_Frequency_Strategy.git](https://github.com/Xyxl1kalgo/High-Mid_Frequency_Strategy.git)
+    cd High-Mid_Frequency_Strategy
+    ```
+2.  **Install dependencies:**
+    ```bash
+    pip install backtrader pandas numpy tqdm matplotlib
+    ```
+3.  **Prepare your data:**
+    * Ensure you have your minute-level historical OHLCV data.
+    * The data needs to be pre-processed to include `volume_imbalance`, `log_return`, and `corr_spy` columns.
+    * The processed data should be available as a pandas DataFrame (e.g., `df_long_final`) within your execution environment (e.g., a Jupyter Notebook or loaded in `main.py`). The DataFrame should have a `datetime` index and a `ticker` column if dealing with multiple assets.
+4.  **Run the optimization script:**
+    ```bash
+    python main.py # Or execute the relevant cells in your Jupyter Notebook
+    ```
+
+### Expected Output
+
+The script will output a table showing the **top-N** best parameter combinations, sorted by **Total Return**, along with other key performance metrics.
+
+---
+
+## Future Work & Areas for Improvement
+
+While the current strategy incorporates comprehensive data analysis and Monte Carlo optimization, there are several avenues for further development to enhance its robustness and profitability:
+
+* **Longer Backtesting Period:** The current 7-day data period is extremely limited. Expanding the historical data to several months or years is crucial to validate the strategy across different market regimes and ensure its long-term viability.
+* **Out-of-Sample Testing:** Implement rigorous out-of-sample testing to prevent overfitting. Optimize parameters on one subset of data and test on a completely unseen subset.
+* **Dynamic Money Management:** Explore more sophisticated position sizing techniques (e.g., volatility-adjusted sizing based on ATR) instead of fixed stake.
+* **Advanced Exit Strategies:** Incorporate additional exit criteria such as time-based exits, profit targets (e.g., take-profit levels based on ATR), or trailing stops.
+* **Alternative Indicators:** Investigate other indicators (e.g., RSI, Stochastic Oscillator, ADX, Bollinger Bands) or combinations to identify stronger, more consistent signals.
+* **Trend-Following Logic Exploration:** Although currently contrarian, explore adapting the strategy's core logic to a trend-following approach, which often yields more consistent results in certain market conditions.
+* **Slippage and Latency Modeling:** For high-frequency strategies, accurately modeling slippage and network latency is crucial for realistic backtesting results.
+* **Transaction Costs:** Ensure commissions are accurately modeled, and consider spread costs if trading illiquid assets.
